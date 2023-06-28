@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react';
 import { render, fireEvent, cleanup, within } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -12,7 +15,6 @@ const TEST_IDS = {
 };
 
 describe('Hacker Dormitory', () => {
-
   let getByTestId;
   let txtInput;
   let dateInput;
@@ -68,11 +70,11 @@ describe('Hacker Dormitory', () => {
     let error = getByTestId(TEST_IDS.errorMsgId);
     expect(error.textContent).toEqual('Sorry, Anderson is not a verified student!');
 
-    fireEvent.change(txtInput, { target: { value: 'dam' } });
+    fireEvent.change(txtInput, { target: { value: 'Dam' } });
     fireEvent.change(dateInput, { target: { value: '2019-10-10' } });
     fireEvent.click(addButton, { button: '0' });
     error = getByTestId(TEST_IDS.errorMsgId);
-    expect(error.textContent).toEqual(`Sorry, dam is not a verified student!`);
+    expect(error.textContent).toEqual(`Sorry, Dam is not a verified student!`);
   });
 
   it('should show error on trying to add a student whose validity has expired', () => {
@@ -101,7 +103,7 @@ describe('Hacker Dormitory', () => {
     expect(error.textContent).toEqual(`Sorry, Talisk's validity has Expired!`);
 
     fireEvent.change(txtInput, { target: { value: 'Talisk' } });
-    fireEvent.change(dateInput, { target: { value: '2023-10-10' } });
+    fireEvent.change(dateInput, { target: { value: '2023-6-30' } });
     fireEvent.click(addButton, { button: '0' });
 
     fireEvent.change(txtInput, { target: { value: 'Rock' } });
